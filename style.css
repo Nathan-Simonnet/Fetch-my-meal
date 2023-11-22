@@ -1,3 +1,13 @@
+:root {
+    --title-container: #68A691;
+    --title-color: #F4F3F3;
+
+    --block-color: #eeeeee;
+
+    --text-color: #002A32;
+    --text-background-color: #D8D1D1;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -8,12 +18,29 @@
 body {
     padding: 8px;
     text-align: center;
-    height: 100vh;
+    /* height: 100vh; */
+    background: #B48B7D;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 header {
 
-    height: 16%;
+    min-height: 160px;
+    width: 60%;
+
+    background: var(--block-color);
+    border-radius: 15px;
+    color: var(--text-color);
+
+    margin: 12px;
+    padding: 6px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -25,9 +52,65 @@ header {
         justify-content: center;
         align-items: center;
 
-        & input {
-            padding: 2px;
+        width: 100%;
+
+        & p {
+            margin: 6px;
         }
+
+        & input {
+            margin: 6px;
+            padding: 4px;
+            background: var(--text-background-color);
+            border-radius: 20px;
+        }
+    }
+
+}
+
+/* This class will be reused, so out of the nest, out of the scope */
+.titles-container {
+    background: var(--title-container);
+    color: var(--title-color);
+    width: 100%;
+    border-radius: 10px;
+    margin: 4px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 80%;
+
+}
+
+/* Cards are not nested for the same reasons */
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+
+    & .img-container {
+
+        height: 50%;
+
+        & img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    & .ingredients-container {
+        border: 4px solid green;
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        align-items: flex-start;
+
     }
 
 }
