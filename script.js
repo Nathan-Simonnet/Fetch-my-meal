@@ -1,74 +1,100 @@
 // https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
 // 'https://www.themealdb.com/api/json/v1/1/search.php?s='
+// 'https://www.themealdb.com/api/json/v1/1/search.php?f=a'
 console.log("fetchmymeal")
-
 const inputText = document.getElementById('input-text');
-const main = document.querySelector('main');
 
 const mealDisplayer = function (data) {
 
-    const card = document.createElement("div");
-    main.appendChild(card);
-    card.classList.add('card')
+    if (document.querySelector('main')) {
+        console.log(document.querySelector('main'))
+        document.querySelector('main').remove();
+        console.log(document.querySelector('main'))
+    }
 
-    const titleContainer = document.createElement("div");
-    card.appendChild(titleContainer);
-    titleContainer.classList.add('title-container')
+    for (let i = 0; i < data.length; i++) {
+        const main = document.createElement("main");
+        document.body.appendChild(main);
 
-    const title = document.createElement("h2");
-    titleContainer.appendChild(title);
-    title.textContent = "Canard Laqué";
+        const card = document.createElement("div");
+        main.appendChild(card);
+        card.classList.add('card')
 
-    const imgContainer = document.createElement("div");
-    card.appendChild(imgContainer);
-    imgContainer.classList.add('img-container');
+        const titleContainer = document.createElement("div");
+        card.appendChild(titleContainer);
+        titleContainer.classList.add('title-container')
 
-    const img = document.createElement("img");
-    imgContainer.appendChild(img);
-    img.src = "img/canard-laque.png"
+        const title = document.createElement("h2");
+        titleContainer.appendChild(title);
+        title.textContent = data[i].strMeal;
 
+        const imgContainer = document.createElement("div");
+        card.appendChild(imgContainer);
+        imgContainer.classList.add('img-container');
 
-    const ingredientsAndTitleContainer = document.createElement("div");
-    card.appendChild(ingredientsAndTitleContainer);
-    ingredientsAndTitleContainer.classList.add('ingredients-and-title-container')
+        const img = document.createElement("img");
+        imgContainer.appendChild(img);
+        img.src = data[i].strMealThumb;
 
-    const ingredientTitleContainer = document.createElement("div");
-    ingredientsAndTitleContainer.appendChild(ingredientTitleContainer);
-    ingredientTitleContainer.classList.add('ingredients-title');
+        const ingredientsAndTitleContainer = document.createElement("div");
+        card.appendChild(ingredientsAndTitleContainer);
+        ingredientsAndTitleContainer.classList.add('ingredients-and-title-container')
 
-    const ingredientsTitle = document.createElement("p");
-    ingredientTitleContainer.appendChild(ingredientsTitle);
-    ingredientsTitle.textContent = "Ingredients";
+        const ingredientTitleContainer = document.createElement("div");
+        ingredientsAndTitleContainer.appendChild(ingredientTitleContainer);
+        ingredientTitleContainer.classList.add('ingredients-title-container');
 
-    const ingredientsContainer = document.createElement("div");
-    ingredientsAndTitleContainer.appendChild(ingredientsContainer);
-    ingredientsContainer.classList.add('ingredients-container')
+        const ingredientsTitle = document.createElement("h3");
+        ingredientTitleContainer.appendChild(ingredientsTitle);
+        ingredientsTitle.textContent = "Ingredients";
 
-    const uls = document.createElement("ul");
-    ingredientsContainer.appendChild(uls);
+        const ingredientsContainer = document.createElement("div");
+        ingredientsAndTitleContainer.appendChild(ingredientsContainer);
+        ingredientsContainer.classList.add('ingredients-container')
 
-    const li1 = document.createElement("li");
-    uls.appendChild(li1);
-    li1.textContent = "truc";
+        let index = 1;
+        let currentIngredient = `strIngredient${index}`;
+        let currentMeasure = `strMeasure${index}`;
 
-    const li2 = document.createElement("li");
-    uls.appendChild(li2);
-    li2.textContent = "truc";
+        while (data[i][currentIngredient]) {
+
+            const li = document.createElement("p");
+            ingredientsContainer.appendChild(li);
+            li.textContent = data[i][currentIngredient] + " - " + data[i][currentMeasure]
+
+            index++;
+            currentIngredient = `strIngredient${index}`;
+            currentMeasure = `strMeasure${index}`;
+        }
+    }
+    setTimeout(() => {
+        console.log(document.querySelector('main'))
+    }, 1000)
+
 }
 
-const mealFetcher = async function (e) {
-    await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast')
+let dataFilter = "";
+// datFilter goes to mealFtecher
+let word = "";
+// word come frome inoput event listener
+const mealFetcher = async function (letters) {
+
+    await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=' + letters)
         .then((response) => response.json()
-            .then((data) => console.log(data.meals[0]))
-            .catch((error) => console.log(error)));
+            .then((data) =>
+                dataFilter = data.meals.filter((meal) =>
+                    meal.strMeal.toLowerCase().includes(word)
+                ))
+        );
+    console.log(dataFilter)
 
-    mealDisplayer();
+    mealDisplayer(dataFilter);
 }
 
+inputText.addEventListener('input', (e) => {
+    if (e.target.value) {
+        word = e.target.value.toLowerCase();
+        mealFetcher(word[0]);
+    }
 
-inputText.addEventListener('input', () => {
-    const word = inputText.value;
-    console.log(word)
-
-    mealFetcher();
 });
