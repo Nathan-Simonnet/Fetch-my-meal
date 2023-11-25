@@ -4,18 +4,20 @@
 console.log("fetchmymeal")
 const inputText = document.getElementById('input-text');
 
-const mealDisplayer = function (data) {
+const mealDisplayer = function (data, empty) {
 
-    if (document.querySelector('main')) {
-        console.log(document.querySelector('main'))
-        document.querySelector('main').remove();
-        console.log(document.querySelector('main'))
+    const main = document.querySelector('main');
+    if (main.firstChild) {
+        while (main.firstChild) {
+            main.firstChild.remove();
+        }
+    }
+
+    if (empty) {
+        return main.textContent = data;
     }
 
     for (let i = 0; i < data.length; i++) {
-        const main = document.createElement("main");
-        document.body.appendChild(main);
-
         const card = document.createElement("div");
         main.appendChild(card);
         card.classList.add('card')
@@ -67,34 +69,53 @@ const mealDisplayer = function (data) {
             currentMeasure = `strMeasure${index}`;
         }
     }
-    setTimeout(() => {
-        console.log(document.querySelector('main'))
-    }, 1000)
+
+    console.log(document.querySelector('main'))
+
 
 }
 
+let isDataNull = "";
 let dataFilter = "";
 // datFilter goes to mealFtecher
 let word = "";
 // word come frome inoput event listener
 const mealFetcher = async function (letters) {
 
+    isDataNull = false;
     await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=' + letters)
         .then((response) => response.json()
-            .then((data) =>
+
+            .then((data) => {
+                if (data.meals == null) {
+                    isDataNull = true;
+                    return mealDisplayer("Oops, we found nothing like that... Try again!", true)
+                }
                 dataFilter = data.meals.filter((meal) =>
                     meal.strMeal.toLowerCase().includes(word)
-                ))
+                )
+            })
         );
-    console.log(dataFilter)
 
-    mealDisplayer(dataFilter);
+    console.log(dataFilter)
+    if (isDataNull == false) {
+        if (dataFilter.length == 0) {
+            mealDisplayer("Oops, we found nothing like that... Try again!", true)
+
+        } else {
+            mealDisplayer(dataFilter);
+        }
+    }
+
+
+
 }
 
 inputText.addEventListener('input', (e) => {
     if (e.target.value) {
         word = e.target.value.toLowerCase();
         mealFetcher(word[0]);
+    } else {
+        mealDisplayer("", true)
     }
-
 });

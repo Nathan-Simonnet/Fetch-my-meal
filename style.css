@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+
 :root {
     /* --background-color: #B48B7D; */
 
@@ -9,9 +12,6 @@
     --text-color: #002A32;
     --text-background-color: #e2e2e2;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
-
 
 * {
     box-sizing: border-box;
@@ -184,8 +184,8 @@ main {
 
         width: 100%;
 
-        height: 80px;
-        overflow-y: hidden;
+        min-height: 400px;
+        /* overflow-y: hidden; */
         display: flex;
         flex-direction: column;
         justify-content: baseline;
@@ -204,12 +204,12 @@ main {
 
 .card:hover {
     transform: scale(1.02);
-    min-height: 400px;
+    /* min-height: 400px;
 
     & .ingredients-container {
         height: auto;
         overflow: none;
-    }
+    } */
 
 }
 
