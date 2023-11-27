@@ -353,14 +353,9 @@ main {
 
 .card:hover .ingredients-and-title-container.clicked::after {
     animation: none;
-
 }
 
 @media screen and (max-width: 550px) {
-
-    * {
-        /* border: 2px solid green; */
-    }
 
     h1 {
         font-size: 24px;
