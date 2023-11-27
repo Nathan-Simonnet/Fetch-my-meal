@@ -4,6 +4,7 @@
 console.log("fetchmymeal")
 const inputText = document.getElementById('input-text');
 
+// Display meal from an array, filter by letter/word
 const mealDisplayer = function (data, empty) {
 
     const main = document.querySelector('main');
@@ -40,7 +41,7 @@ const mealDisplayer = function (data, empty) {
 
         const ingredientsAndTitleContainer = document.createElement("div");
         card.appendChild(ingredientsAndTitleContainer);
-        ingredientsAndTitleContainer.classList.add('ingredients-and-title-container')
+        ingredientsAndTitleContainer.classList.add('ingredients-and-title-container');
 
         const ingredientTitleContainer = document.createElement("div");
         ingredientsAndTitleContainer.appendChild(ingredientTitleContainer);
@@ -70,47 +71,67 @@ const mealDisplayer = function (data, empty) {
         }
     }
 
+
     console.log(document.querySelector('main'))
 
 
+    document.querySelectorAll('.ingredients-and-title-container').forEach((container) => {
+        container.addEventListener('click', (e) => {
+            container.classList.toggle("clicked")
+        });
+    });
+
 }
 
+// I'm not familiar with "catch" so, for now , old school methods
 let isDataNull = "";
-let dataFilter = "";
 // datFilter goes to mealFtecher
-let word = "";
+let dataFilter = "";
 // word come frome inoput event listener
+let word = "";
+
+// Fetch API + letters wich com from the eventListener
 const mealFetcher = async function (letters) {
 
-    isDataNull = false;
-    await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=' + letters)
-        .then((response) => response.json()
+    try {
+        let isDataNull = false;
 
-            .then((data) => {
-                if (data.meals == null) {
-                    isDataNull = true;
-                    return mealDisplayer("Oops, we found nothing like that... Try again!", true)
-                }
-                dataFilter = data.meals.filter((meal) =>
-                    meal.strMeal.toLowerCase().includes(word)
-                )
-            })
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=' + letters);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
+
+        if (data.meals == null) {
+            isDataNull = true;
+            return mealDisplayer("Oops, we found nothing like that... Try again!", true);
+        }
+
+        const dataFilter = data.meals.filter((meal) =>
+            meal.strMeal.toLowerCase().includes(word)
         );
 
-    console.log(dataFilter)
-    if (isDataNull == false) {
-        if (dataFilter.length == 0) {
-            mealDisplayer("Oops, we found nothing like that... Try again!", true)
+        console.log(dataFilter);
 
-        } else {
-            mealDisplayer(dataFilter);
+        if (!isDataNull) {
+            if (dataFilter.length === 0) {
+                mealDisplayer("Oops, we found nothing like that... Try using a different spelling!", true);
+            } else {
+                mealDisplayer(dataFilter);
+            }
         }
+    } catch (error) {
+        // Handle the error
+        console.error('An error occurred:', error.message);
+        mealDisplayer('An error occurred. Please try again later, or maybe using a different spelling.', true);
     }
-
-
 
 }
 
+
+// the more you write, the more it specifies
 inputText.addEventListener('input', (e) => {
     if (e.target.value) {
         word = e.target.value.toLowerCase();
@@ -118,4 +139,24 @@ inputText.addEventListener('input', (e) => {
     } else {
         mealDisplayer("", true)
     }
+});
+
+// Light / dark mode adding a class
+
+// const lightMode = document.querySelector('.toggle-switch')
+
+// lightMode.addEventListener('click', (e) => {
+//     lightMode.classList.toggle("dark-mode")
+// });
+
+const toggleSwitch = document.querySelector('.toggle-switch');
+
+toggleSwitch.offsetWidth;
+
+toggleSwitch.addEventListener('click', () => {
+    toggleSwitch.classList.toggle("dark-mode");
+    const root = document.documentElement;
+    root.classList.toggle("dark-mode")
+
+
 });
