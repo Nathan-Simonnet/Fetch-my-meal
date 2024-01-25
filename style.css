@@ -218,6 +218,35 @@ main {
     color: var(--text-color);
 }
 
+/* @keyframes recipeHide {
+    from {
+        filter: none;
+        max-height: 1200px;
+        overflow: none;
+    }
+
+    to {
+        overflow: hidden;
+        filter: blur(2px);
+        max-height: 80px;
+    }
+}
+
+@keyframes recipeRevel {
+    from {
+        overflow: hidden;
+        filter: blur(2px);
+        max-height: 80px;
+    }
+
+    to {
+        filter: none;
+        max-height: 1200px;
+        overflow: none;
+    }
+
+} */
+
 /* Cards are not nested for the same reasons */
 .card {
 
@@ -231,7 +260,7 @@ main {
     border-radius: 10px;
 
     width: 350px;
-    min-height: 400px;
+    min-height: 300px;
     padding: 6px;
     margin: 6px 12px 6px 12px;
 
@@ -256,7 +285,7 @@ main {
     & .ingredients-and-title-container {
         position: relative;
         width: 100%;
-        margin: 6px 6px 52px 6px;
+        margin: 6px 6px 6px 6px;
         text-align: center;
 
         & .ingredients-title-container {
@@ -266,20 +295,20 @@ main {
             height: 40px;
             width: 100%;
             background: var(--ingredient-title-container);
-
         }
 
         & .ingredients-container {
 
-            background: var(--ingredient-container);
-            filter: blur(2px);
-            height: 80px;
-            width: 100%;
             overflow: hidden;
+            filter: blur(2px);
+            max-height: 80px;
+            background: var(--ingredient-container);
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: baseline;
             align-items: baseline;
+            transition: max-height 0.6s ease-in;
 
             & p {
 
@@ -287,7 +316,7 @@ main {
                 display: flex;
                 text-align: left;
 
-                padding: 12px 12px 12px 12px;
+                padding: 6px 6px 6px 6px;
             }
         }
     }
@@ -296,64 +325,67 @@ main {
 .ingredients-and-title-container.clicked {
 
     & .ingredients-container {
-        filter: none;
-        height: auto;
+        max-height: 1200px;
         overflow: none;
+        filter: none;
     }
 }
 
 @keyframes arrowAnime {
     0% {
-        transform: translateX(-50%) rotate(90deg) scale(1);
+        transform: rotate(90deg) scale(1);
     }
 
     50% {
-        transform: translateX(-50%) rotate(90deg) scale(1.15);
+        transform: rotate(90deg) scale(1.1);
     }
 
     100% {
-        transform: translateX(-50%) rotate(90deg) scale(1);
+        transform: rotate(90deg) scale(1);
 
     }
 
 }
 
-.ingredients-and-title-container::after {
+.arrowContainer {
+    height: 40px;
+    width: 100%;
+    margin: 6px;
 
-    cursor: pointer;
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 1;
-    content: "\27A7";
+    cursor: pointer;
 
-    font-size: 40px;
-    background: var(--title-container);
-    width: 40px;
-    height: 60px;
-    border-radius: 12px;
 
-    bottom: -56px;
-    left: 50%;
-    transform: translateX(-50%) rotate(90deg);
+    & .arrow {
+        background: var(--title-container);
 
-    transition: 0.6s;
+        padding-left: 6px;
+        font-size: 40px;
+        width: 40px;
+        height: 60px;
+        border-radius: 12px;
+        transform: rotate(90deg);
+
+        transition: 0.6s;
+    }
+
+    .arrow.clicked {
+        transform: rotate(-90deg);
+        transition: 0.5s;
+    }
+
 }
 
-.ingredients-and-title-container.clicked::after {
-
-    transform: translateX(-50%) rotate(-90deg);
-    transition: 0.5s;
-}
-
-.card:hover .ingredients-and-title-container::after {
+.card:hover .arrow {
     animation: arrowAnime 0.5s linear infinite;
 }
 
-.card:hover .ingredients-and-title-container.clicked::after {
+.card:hover .arrow.clicked {
     animation: none;
 }
+
 
 @media screen and (max-width: 550px) {
 

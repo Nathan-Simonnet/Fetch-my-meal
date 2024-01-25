@@ -1,7 +1,3 @@
-// https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
-// 'https://www.themealdb.com/api/json/v1/1/search.php?s='
-// 'https://www.themealdb.com/api/json/v1/1/search.php?f=a'
-console.log("fetchmymeal")
 const inputText = document.getElementById('input-text');
 
 // Display meal from an array, filter by letter/word
@@ -69,17 +65,33 @@ const mealDisplayer = function (data, empty) {
             currentIngredient = `strIngredient${index}`;
             currentMeasure = `strMeasure${index}`;
         }
+
+        const arrowContainer = document.createElement("div");
+        card.appendChild(arrowContainer);
+        arrowContainer.classList.add('arrowContainer')
+
+        const arrow = document.createElement("div");
+        arrowContainer.appendChild(arrow);
+        arrow.classList.add('arrow')
+        arrow.textContent = String.fromCharCode(0x27A7)
+
+
+        arrowContainer.addEventListener('click', () => {
+            // const ingredientsContainer = card.querySelector('.ingredients-and-title-container');
+
+            ingredientsAndTitleContainer.classList.toggle('clicked');
+            arrow.classList.toggle('clicked');
+
+            // Scroll to the end of the card or back to the top
+            if (ingredientsAndTitleContainer.classList.contains('clicked')) {
+                ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            else {
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
     }
 
-
-    console.log(document.querySelector('main'))
-
-
-    document.querySelectorAll('.ingredients-and-title-container').forEach((container) => {
-        container.addEventListener('click', (e) => {
-            container.classList.toggle("clicked")
-        });
-    });
 
 }
 
@@ -87,7 +99,7 @@ const mealDisplayer = function (data, empty) {
 let isDataNull = "";
 // datFilter goes to mealFtecher
 let dataFilter = "";
-// word come frome inoput event listener
+// word come frome input event listener
 let word = "";
 
 // Fetch API + letters wich com from the eventListener
@@ -113,7 +125,7 @@ const mealFetcher = async function (letters) {
             meal.strMeal.toLowerCase().includes(word)
         );
 
-        console.log(dataFilter);
+        // console.log(dataFilter);
 
         if (!isDataNull) {
             if (dataFilter.length === 0) {
@@ -141,14 +153,6 @@ inputText.addEventListener('input', (e) => {
     }
 });
 
-// Light / dark mode adding a class
-
-// const lightMode = document.querySelector('.toggle-switch')
-
-// lightMode.addEventListener('click', (e) => {
-//     lightMode.classList.toggle("dark-mode")
-// });
-
 const toggleSwitch = document.querySelector('.toggle-switch');
 
 toggleSwitch.offsetWidth;
@@ -157,6 +161,4 @@ toggleSwitch.addEventListener('click', () => {
     toggleSwitch.classList.toggle("dark-mode");
     const root = document.documentElement;
     root.classList.toggle("dark-mode")
-
-
 });
