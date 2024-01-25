@@ -84,7 +84,8 @@ const mealDisplayer = function (data, empty) {
 
             // Scroll to the end of the card or back to the top
             if (ingredientsAndTitleContainer.classList.contains('clicked')) {
-                ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth' });
+                // ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth' });
+                ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
             else {
                 card.scrollIntoView({ behavior: 'smooth', block: 'start' });
