@@ -77,6 +77,7 @@ const mealDisplayer = function (data, empty) {
 
 
         arrowContainer.addEventListener('click', () => {
+<<<<<<< HEAD
             // const ingredientsContainer = card.querySelector('.ingredients-and-title-container');
 
             ingredientsAndTitleContainer.classList.toggle('clicked');
@@ -85,6 +86,17 @@ const mealDisplayer = function (data, empty) {
             // Scroll to the end of the card or back to the top
             if (ingredientsAndTitleContainer.classList.contains('clicked')) {
                 ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth' });
+=======
+            const ingredientsContainer = card.querySelector('.ingredients-and-title-container');
+            // const arrow = document.querySelector('.arrow')
+            // Toggle class to change max-height property
+            ingredientsContainer.classList.toggle('clicked');
+            arrow.classList.toggle('clicked');
+
+            // Scroll to the end of the card or back to the top
+            if (ingredientsContainer.classList.contains('clicked')) {
+                ingredientsContainer.scrollIntoView({ behavior: 'smooth' });
+>>>>>>> c6a6c2828b75e600a04463d2b02994115875a60d
             }
             else {
                 card.scrollIntoView({ behavior: 'smooth', block: 'start' });
