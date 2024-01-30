@@ -4,12 +4,15 @@
 :root {
 
     --background-color: #e2e2e2;
-    --title-container: #EDA114;
+    --title-container: #b77a07;
+    /* --title-container: #EDA114; */
     --title-color: #F4F3F3;
 
     --block-color: #F4F3F3;
 
     --text-color: #002A32;
+    --input-border-color: red;
+    --placeholder-color: #8a8a8a;
 
     --ingredient-title-container: #d5d4d4;
     --ingredient-container: #e2e2e2;
@@ -17,12 +20,14 @@
 
 :root.dark-mode {
     --background-color: #001a20;
-    --title-container: #db8e00;
+    --title-container: #b77a07;
+    /* --title-container: #db8e00; */
     --title-color: #F4F3F3;
 
     --block-color: #002A32;
 
     --text-color: #F4F3F3;
+    --placeholder-color: #8a8a8a;
     --text-background-color: #002A32;
 
     --ingredient-title-container: #001418;
@@ -50,6 +55,8 @@ body {
     padding: 8px;
 }
 
+/* Dark-mode handler */
+/* ======================================================================== */
 .toggle-switch {
     cursor: pointer;
     position: absolute;
@@ -59,6 +66,7 @@ body {
     width: 60px;
 
     & .circle-container {
+        cursor: pointer;
         position: relative;
         height: 30px;
         width: 60px;
@@ -74,12 +82,13 @@ body {
         transition: 1s;
 
         & .circle {
+            cursor: pointer;
             position: absolute;
             top: 50%;
-            left: 0;
+            left: -10%;
             transform: translate(40%, -50%);
-            height: 20px;
-            width: 20px;
+            height: 26px;
+            width: 26px;
             border-radius: 50%;
             background: white;
             box-shadow: 2px 2px 4px 2px rgba(255, 255, 255, 0.084);
@@ -92,8 +101,9 @@ body {
 
             & #moon {
                 position: relative;
-                top: -5%;
+                top: -6%;
                 left: -5%;
+                font-size: 18px;
             }
         }
     }
@@ -109,12 +119,13 @@ body {
             background: rgb(50, 50, 50);
             box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.16);
             top: 50%;
-            left: 50%;
+            left: 44%;
             transform: translate(10%, -50%);
 
             & #sun {
                 display: block;
                 position: relative;
+                font-size: 18px;
                 top: -7%;
 
                 color: white;
@@ -127,6 +138,9 @@ body {
 
     }
 }
+
+/* Header fully nested, and out of the scopes elements related to it */
+/* ======================================================================== */
 
 header {
     box-shadow: 2px 2px 2px 2px rgba(102, 102, 102, 0.168);
@@ -181,14 +195,20 @@ h1 {
 }
 
 input {
-    color: var(--text-color);
     font-size: 12px;
+    color: var(--text-color);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
 }
 
-p {
+input::placeholder {
+    color: var(--placeholder-color);
+}
+
+p,
+label {
     color: var(--text-color);
-    font-size: 16px;
+    font-size: 19px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -198,14 +218,8 @@ h2 {
     color: var(--title-color);
 }
 
-/* This class will be reused, so out of the nest, out of the scope */
-.title-container {
-    background: var(--title-container);
-    color: var(--title-color);
-    border-radius: 10px;
-    margin: 6px;
-    padding: 6px;
-}
+/* Main */
+/* ================================================== */
 
 main {
     position: relative;
@@ -218,36 +232,16 @@ main {
     color: var(--text-color);
 }
 
-/* @keyframes recipeHide {
-    from {
-        filter: none;
-        max-height: 1200px;
-        overflow: none;
-    }
-
-    to {
-        overflow: hidden;
-        filter: blur(2px);
-        max-height: 80px;
-    }
+.title-container {
+    background: var(--title-container);
+    color: var(--title-color);
+    border-radius: 10px;
+    margin: 6px;
+    padding: 6px;
 }
 
-@keyframes recipeRevel {
-    from {
-        overflow: hidden;
-        filter: blur(2px);
-        max-height: 80px;
-    }
-
-    to {
-        filter: none;
-        max-height: 1200px;
-        overflow: none;
-    }
-
-} */
-
-/* Cards are not nested for the same reasons */
+/* Fully nested card */
+/* ------------------ */
 .card {
 
     display: flex;
@@ -344,7 +338,6 @@ main {
         transform: rotate(90deg) scale(1);
 
     }
-
 }
 
 .arrowContainer {
@@ -359,13 +352,16 @@ main {
 
 
     & .arrow {
+        cursor: pointer;
         background: var(--title-container);
 
         padding-left: 6px;
+        padding-bottom: 6px;
         font-size: 40px;
         width: 40px;
         height: 60px;
         border-radius: 12px;
+        border: 1px solid rgb(135, 135, 135);
         transform: rotate(90deg);
 
         transition: 0.6s;
@@ -378,6 +374,7 @@ main {
 
 }
 
+
 .card:hover .arrow {
     animation: arrowAnime 0.5s linear infinite;
 }
@@ -385,7 +382,6 @@ main {
 .card:hover .arrow.clicked {
     animation: none;
 }
-
 
 @media screen and (max-width: 550px) {
 
@@ -414,6 +410,5 @@ main {
     .card:hover {
         transform: none;
     }
-
 
 }

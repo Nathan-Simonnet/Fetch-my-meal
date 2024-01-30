@@ -14,6 +14,7 @@ const mealDisplayer = function (data, empty) {
         return main.textContent = data;
     }
 
+    // Creation of the elements
     for (let i = 0; i < data.length; i++) {
         const card = document.createElement("div");
         main.appendChild(card);
@@ -34,6 +35,7 @@ const mealDisplayer = function (data, empty) {
         const img = document.createElement("img");
         imgContainer.appendChild(img);
         img.src = data[i].strMealThumb;
+        img.alt = data[i].strMeal;
 
         const ingredientsAndTitleContainer = document.createElement("div");
         card.appendChild(ingredientsAndTitleContainer);
@@ -55,6 +57,7 @@ const mealDisplayer = function (data, empty) {
         let currentIngredient = `strIngredient${index}`;
         let currentMeasure = `strMeasure${index}`;
 
+        // Ingredients displayer
         while (data[i][currentIngredient]) {
 
             const li = document.createElement("p");
@@ -70,38 +73,35 @@ const mealDisplayer = function (data, empty) {
         card.appendChild(arrowContainer);
         arrowContainer.classList.add('arrowContainer')
 
-        const arrow = document.createElement("div");
+        const arrow = document.createElement("button");
         arrowContainer.appendChild(arrow);
         arrow.classList.add('arrow')
         arrow.textContent = String.fromCharCode(0x27A7)
 
-
+        // Unfold the ingredients card, and fold it back
         arrowContainer.addEventListener('click', () => {
-            // const ingredientsContainer = card.querySelector('.ingredients-and-title-container');
-
             ingredientsAndTitleContainer.classList.toggle('clicked');
             arrow.classList.toggle('clicked');
 
             // Scroll to the end of the card or back to the top
             if (ingredientsAndTitleContainer.classList.contains('clicked')) {
-                // ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth' });
                 ingredientsAndTitleContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            else {
+            } else {
                 card.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     }
 }
 
-// I'm not familiar with "catch" so, for now , old school methods
+// Equivalent of throw error
 let isDataNull = "";
 // datFilter goes to mealFtecher
 let dataFilter = "";
-// word come frome input event listener
+// letters from input event listener
 let word = "";
 
 // Fetch API + letters wich com from the eventListener
+// Launched by inputText event listener
 const mealFetcher = async function (letters) {
 
     try {
@@ -141,8 +141,8 @@ const mealFetcher = async function (letters) {
 
 }
 
-
 // the more you write, the more it specifies
+// Launch mealFetcher
 inputText.addEventListener('input', (e) => {
     if (e.target.value) {
         word = e.target.value.toLowerCase();
@@ -152,8 +152,8 @@ inputText.addEventListener('input', (e) => {
     }
 });
 
+// Dark mode handler
 const toggleSwitch = document.querySelector('.toggle-switch');
-
 toggleSwitch.offsetWidth;
 
 toggleSwitch.addEventListener('click', () => {
