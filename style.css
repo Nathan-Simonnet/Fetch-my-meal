@@ -53,7 +53,6 @@ body {
 
     background: var(--background-color);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    padding: 8px;
     min-height: 100vh;
 }
 
@@ -152,7 +151,7 @@ header {
     background: var(--block-color);
     border-radius: 15px;
 
-    margin: 18px 24px 24px 24px;
+    margin: 24px 24px 24px 24px;
     padding: 6px;
 
     display: flex;
@@ -420,11 +419,13 @@ footer {
         justify-content: center;
         align-items: center;
 
+        z-index: -1;
 
         & span {
             font-size: 40px;
             padding-bottom: 6px;
             padding-left: 24px;
+            color: black;
 
             display: flex;
             justify-content: center;
