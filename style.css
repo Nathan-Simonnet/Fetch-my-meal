@@ -366,6 +366,7 @@ main {
     & .arrow {
         cursor: pointer;
         background: var(--title-container);
+        color: var(--text-color);
 
         padding-left: 6px;
         padding-bottom: 6px;
@@ -419,13 +420,11 @@ footer {
         justify-content: center;
         align-items: center;
 
-        z-index: -1;
-
         & span {
             font-size: 40px;
             padding-bottom: 6px;
             padding-left: 24px;
-            color: black;
+            color: var(--text-color);
 
             display: flex;
             justify-content: center;
@@ -449,6 +448,7 @@ footer {
             align-items: center;
 
             transition: 0.1s;
+            z-index: 2;
 
             & img {
                 width: 40px;
