@@ -15,5 +15,5 @@ Recipes fetcher and displayer
 + Enjoy your meal!
 
 # Additional comment
-I hardly consider a remake with an improved color contrast, and accessibility features
+I hardly consider a remake, especially to improve the color contrast, and add more accessibility features.
 Stay tuned!
