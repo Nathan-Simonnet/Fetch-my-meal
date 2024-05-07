@@ -14,6 +14,6 @@ Recipes fetcher and displayer
 + Navigate with mouse or keyboard through the recipies
 + Enjoy your meal!
 
-# Additional comment
+## Additional comment
 I hardly consider a remake, especially to improve the color contrast, and add more accessibility features.
 Stay tuned!
