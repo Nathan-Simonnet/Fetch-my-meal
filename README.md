@@ -1,4 +1,4 @@
-### Fetch-my-meal
+# Fetch-my-meal
 
 Recipes fetcher and displayer
 
